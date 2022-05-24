@@ -51,7 +51,7 @@ export interface IReport {
     notes?: INote[];
 }
 
-export interface IReportCreation extends Optional<IReport, 'id'|'areas'|'notes'>{}
+export interface IReportCreation extends Optional<IReport, 'id' | 'areas' | 'notes' | 'timeStamp'> {}
 
 
 export interface IReportInstance extends Model<IReport, IReportCreation>, IReport {}

@@ -12,4 +12,4 @@ export interface IStandart {
 export interface IStandartCreation extends Optional<IStandart, 'id'>{}
 
 
-export interface IStandartInstance extends Model<IStandart, IStandartCreation> {}
+export interface IStandartInstance extends Model<IStandart, IStandartCreation>, IStandart {}

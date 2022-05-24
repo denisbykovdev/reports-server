@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
 import { Report } from '../models/Report';
+import { Writable } from 'stream';
+import { pipeline } from 'stream/promises';
+// import * as sequelizeStream from 'node-sequelize-stream';
+// import { sequelizeConnection } from '../services/db';
+
+// sequelizeStream(sequelizeConnection, 50, true);
 
 export default async function reportsController(
     req: Request,
@@ -15,18 +21,38 @@ export default async function reportsController(
         `--- reportsController/req.files:`, req.files
     );
     try {
-        async function test() {
-            try {
-                const reports = await Report.findAll();
-                
-                console.log(`--- test/reports:`, reports)
-                
-            } catch (error) {
-                console.log(error)
-            }
-        };
+        const stream = new Writable();
 
-        await test();
+        const data = [];
+
+        stream.on(
+            'data',
+            (
+                chunk
+            ) => {
+                data.push(
+                    chunk as never
+                );
+            }
+        );
+        
+        stream.on(
+            'end',
+            () => {
+                new Promise(
+                    async resolve => {
+                        const reports = await Report.findAll();
+                        resolve(reports);
+                    }
+                );
+            }
+        );
+
+        // const stream = Report. findAllWithStream()
+        
+        stream.pipe(
+            res
+        );
 
     } catch (error) {
         res.status(500).send({ message: 'server error' })

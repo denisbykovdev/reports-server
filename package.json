@@ -103,6 +103,7 @@
     "multicoin-address-validator": "^0.5.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
+    "node-sequelize-stream": "^1.1.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-google": "^0.3.0",

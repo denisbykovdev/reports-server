@@ -110,23 +110,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ reportsController)
 /* harmony export */ });
 /* harmony import */ var _models_Report__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Report */ "./server/models/Report.ts");
+/* harmony import */ var stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! stream */ "stream");
+/* harmony import */ var stream__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(stream__WEBPACK_IMPORTED_MODULE_1__);
 
+
+// import * as sequelizeStream from 'node-sequelize-stream';
+// import { sequelizeConnection } from '../services/db';
+// sequelizeStream(sequelizeConnection, 50, true);
 async function reportsController(req, res) {
     console.log(`--- reportsController/req.body:`, req.body);
     console.log(`--- reportsController/req.user:`, req.user);
     console.log(`--- reportsController/req.files:`, req.files);
     try {
-        async function test() {
-            try {
+        const stream = new stream__WEBPACK_IMPORTED_MODULE_1__.Writable();
+        const data = [];
+        stream.on('data', (chunk) => {
+            data.push(chunk);
+        });
+        stream.on('end', () => {
+            new Promise(async (resolve) => {
                 const reports = await _models_Report__WEBPACK_IMPORTED_MODULE_0__.Report.findAll();
-                console.log(`--- test/reports:`, reports);
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-        ;
-        await test();
+                resolve(reports);
+            });
+        });
+        // const stream = Report. findAllWithStream()
+        stream.pipe(res);
     }
     catch (error) {
         res.status(500).send({ message: 'server error' });
@@ -187,6 +195,127 @@ function rootController(req, res) {
 
 /***/ }),
 
+/***/ "./server/models/Area.ts":
+/*!*******************************!*\
+  !*** ./server/models/Area.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Area": () => (/* binding */ Area)
+/* harmony export */ });
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
+/* harmony import */ var _Problem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Problem */ "./server/models/Problem.ts");
+
+
+
+const Area = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.define('areas', {
+    id: {
+        type: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().INTEGER),
+        autoIncrement: true,
+        primaryKey: true
+    },
+    area_name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    isSavedToReport: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().BOOLEAN),
+    // problems: sequelize.STRING,
+    samples: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+});
+Area.hasMany(_Problem__WEBPACK_IMPORTED_MODULE_2__.Problem, {
+    foreignKey: 'id'
+});
+// Area.belongsToMany(
+//     Problem, 
+//     { 
+//         through: AreaProblem,
+//         foreignKey: 'problem_id',
+//         // type: sequelize.INTEGER
+//         as: 'problems'
+//     }
+// );
+// Problem.belongsToMany(
+//     Area, 
+//     { 
+//         through: AreaProblem,
+//         foreignKey: 'area_id',
+//         // foreignKeyConstraint: false,
+//         // targetKey: 'id',
+//         // as: 'areas'
+//     }
+// );
+
+
+/***/ }),
+
+/***/ "./server/models/Note.ts":
+/*!*******************************!*\
+  !*** ./server/models/Note.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Note": () => (/* binding */ Note)
+/* harmony export */ });
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
+
+
+const Note = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.define('notes', {
+    id: {
+        type: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().INTEGER.UNSIGNED),
+        autoIncrement: true,
+        primaryKey: true
+    },
+    text: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+});
+
+
+/***/ }),
+
+/***/ "./server/models/Problem.ts":
+/*!**********************************!*\
+  !*** ./server/models/Problem.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Problem": () => (/* binding */ Problem)
+/* harmony export */ });
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
+/* harmony import */ var _Standart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Standart */ "./server/models/Standart.ts");
+
+
+
+const Problem = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.define('problems', {
+    id: {
+        type: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().INTEGER),
+        autoIncrement: true,
+        primaryKey: true
+    },
+    name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    details_of_eclipse: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    image: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    solution: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    cost: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    // standarts: sequelize.STRING,
+    profession_name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    timeStamp: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    isSavedToReport: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().BOOLEAN)
+});
+Problem.hasMany(_Standart__WEBPACK_IMPORTED_MODULE_2__.Standart, {
+    foreignKey: 'id'
+});
+
+
+/***/ }),
+
 /***/ "./server/models/Report.ts":
 /*!*********************************!*\
   !*** ./server/models/Report.ts ***!
@@ -200,6 +329,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
 /* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
+/* harmony import */ var _Area__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Area */ "./server/models/Area.ts");
+/* harmony import */ var _Note__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Note */ "./server/models/Note.ts");
+
+
 
 
 const Report = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.define('reports', {
@@ -246,15 +379,61 @@ const Report = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.def
     is_resume_template: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
     more_systems: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
     timeStamp: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
-    areas: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
-    notes: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+    //optional if areas have no assosiations with reports
+    // areas: sequelize.STRING,
+    // notes: sequelize.STRING
 });
-// Report.hasMany(Area, {
-//     foreignKey: 'id'
-// });
-// Area.belongsTo(Report, { as: 'areas',  foreignKey: 'id' });
-// Report.hasMany(Note);
-// Note.belongsTo(Report);
+Report.hasMany(_Area__WEBPACK_IMPORTED_MODULE_2__.Area, {
+    foreignKey: "id"
+});
+Report.hasMany(_Note__WEBPACK_IMPORTED_MODULE_3__.Note, {
+    foreignKey: 'id'
+});
+// Report.hasMany(
+//     AreaProblem,
+//     {
+//         foreignKey: 'id'
+//     }
+// );
+// Area.belongsTo(
+//     Report,
+//     {
+//         foreignKey: "id",
+//         as: 'areas',
+//         targetKey: 'id'
+//     }
+// );
+
+
+/***/ }),
+
+/***/ "./server/models/Standart.ts":
+/*!***********************************!*\
+  !*** ./server/models/Standart.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Standart": () => (/* binding */ Standart)
+/* harmony export */ });
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
+
+
+const Standart = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.define('standarts', {
+    id: {
+        type: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().INTEGER.UNSIGNED),
+        autoIncrement: true,
+        primaryKey: true
+    },
+    text: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    image: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    whatToDo: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    fault: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    profession: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+});
 
 
 /***/ }),
@@ -597,6 +776,16 @@ module.exports = require("fs");
 /***/ ((module) => {
 
 module.exports = require("http");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("stream");
 
 /***/ })
 

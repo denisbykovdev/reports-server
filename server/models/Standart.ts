@@ -1,6 +1,6 @@
 import sequelize from "sequelize";
-import { IStandartInstance } from "../@types/IStandart";
 import { sequelizeConnection } from "../services/db";
+import { IStandartInstance } from "../@types/IStandart";
 
 export const Standart = sequelizeConnection.define<IStandartInstance>(
     'standarts',

@@ -1,6 +1,9 @@
 import { IReportInstance } from "../@types/IReport";
 import sequelize from "sequelize";
 import { sequelizeConnection } from "../services/db";
+import { Area } from "./Area";
+import { Note } from "./Note";
+import { AreaProblem } from "./AreaProblem";
 
 export const Report = sequelizeConnection.define<IReportInstance>(
     'reports',
@@ -48,15 +51,38 @@ export const Report = sequelizeConnection.define<IReportInstance>(
         is_resume_template: sequelize.STRING,
         more_systems: sequelize.STRING,
         timeStamp: sequelize.STRING,
-        areas: sequelize.STRING,
-        notes: sequelize.STRING
+        //optional if areas have no assosiations with reports
+        // areas: sequelize.STRING,
+        // notes: sequelize.STRING
     }
 );
 
-// Report.hasMany(Area, {
-//     foreignKey: 'id'
-// });
-// Area.belongsTo(Report, { as: 'areas',  foreignKey: 'id' });
-// Report.hasMany(Note);
-// Note.belongsTo(Report);
+Report.hasMany(
+    Area, 
+    { 
+        foreignKey: "id"
+    }
+);
 
+Report.hasMany(
+    Note,
+    {
+        foreignKey: 'id'
+    }
+);
+
+// Report.hasMany(
+//     AreaProblem,
+//     {
+//         foreignKey: 'id'
+//     }
+// );
+
+// Area.belongsTo(
+//     Report,
+//     {
+//         foreignKey: "id",
+//         as: 'areas',
+//         targetKey: 'id'
+//     }
+// );
