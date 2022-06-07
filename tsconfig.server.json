@@ -1,19 +1,15 @@
 {
     "compilerOptions": {
-        //   "outDir": "build",
-        //   "rootDir": "server",
-        //   "noEmit": false,
-        // "module": "commonjs",
         "module": "ESNext",
-        "esModuleInterop": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
         "target": "ESNext",
         "lib": [
             "DOM",
             "DOM.Iterable",
             "ESNext"
         ],
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
         "strict": true,
         "noImplicitAny": false,
         "strictFunctionTypes": true,

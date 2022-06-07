@@ -12,16 +12,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "App": () => (/* binding */ App)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
-const App = () => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(AppContainer, null, "reports server"));
-const AppContainer = (styled_components__WEBPACK_IMPORTED_MODULE_1___default().div) `
-    position: relative;
-`;
+const App = () => {
+    const [readedReports, setReports] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+    const [readedAreas, setAreas] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+    const [readedProblems, setProblems] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+    const [readedStandarts, setStandarts] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        (async () => {
+            const { data: reports } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/reports`);
+            console.log(`--- client/data:`, reports);
+            setReports(reports);
+            const { data: areas } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/areas`);
+            console.log(`--- client/areas:`, areas);
+            setAreas(areas);
+            const { data: problems } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/problems`);
+            console.log(`--- client/problems:`, problems);
+            setProblems(problems);
+            const { data: standarts } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/standarts`);
+            console.log(`--- client/standarts:`, standarts);
+            setReports(standarts);
+        })();
+    }, []);
+    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { className: 'app-container' },
+        "reports server/data:",
+        react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
+            readedReports && readedReports.map((report, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
+                react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.report_adress)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.areas)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.notes))))),
+            readedAreas && readedAreas.map((area, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
+                react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(area.area_name)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(area.problems)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(area.samples))))),
+            readedProblems && readedProblems.map((problem, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
+                react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(problem.name)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(problem.standarts)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${problem.image}`, style: {
+                            width: 100,
+                            height: 100
+                        } })))),
+            readedStandarts && readedStandarts.map((standart, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
+                react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(standart.id)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${standart.image}`, style: {
+                            width: 100,
+                            height: 100
+                        } })))))));
+};
 
 
 /***/ }),
@@ -99,6 +145,108 @@ const GlobalStyles = styled_components__WEBPACK_IMPORTED_MODULE_0__.createGlobal
 
 /***/ }),
 
+/***/ "./server/controllers/areasController.ts":
+/*!***********************************************!*\
+  !*** ./server/controllers/areasController.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ areasController)
+/* harmony export */ });
+/* harmony import */ var _models_Area__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Area */ "./server/models/Area.ts");
+/* harmony import */ var _models_Problem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Problem */ "./server/models/Problem.ts");
+/* harmony import */ var _models_Sample__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/Sample */ "./server/models/Sample.ts");
+
+
+
+async function areasController(req, res) {
+    console.log(`--- areasController/req.body:`, req.body);
+    // console.log(
+    //     `--- areasController/req.user:`, req.user
+    // );
+    // console.log(
+    //     `--- areasController/req.files:`, req.files
+    // );
+    try {
+        const areas = await _models_Area__WEBPACK_IMPORTED_MODULE_0__.Area.findAll({
+            include: [
+                {
+                    model: _models_Problem__WEBPACK_IMPORTED_MODULE_1__.Problem,
+                    as: 'problems'
+                },
+                {
+                    model: _models_Sample__WEBPACK_IMPORTED_MODULE_2__.Sample,
+                    as: 'samples'
+                }
+            ]
+        });
+        console.log(`--- areasController:`, areas);
+        if (areas) {
+            res.status(200).send(areas);
+        }
+        ;
+    }
+    catch (error) {
+        console.log(`--- areasController/error:`, error);
+        res.status(500).send({ message: 'server error' });
+    }
+    ;
+}
+;
+
+
+/***/ }),
+
+/***/ "./server/controllers/problemsController.ts":
+/*!**************************************************!*\
+  !*** ./server/controllers/problemsController.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ problemsController)
+/* harmony export */ });
+/* harmony import */ var _models_Problem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Problem */ "./server/models/Problem.ts");
+/* harmony import */ var _models_Standart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Standart */ "./server/models/Standart.ts");
+
+
+async function problemsController(req, res) {
+    console.log(`--- problemsController/req.body:`, req.body);
+    // console.log(
+    //     `--- problemsController/req.user:`, req.user
+    // );
+    // console.log(
+    //     `--- problemsController/req.files:`, req.files
+    // );
+    try {
+        const problems = await _models_Problem__WEBPACK_IMPORTED_MODULE_0__.Problem.findAll({
+            include: [
+                {
+                    model: _models_Standart__WEBPACK_IMPORTED_MODULE_1__.Standart,
+                    as: 'standarts'
+                }
+            ]
+        });
+        console.log(`--- problemsController:`, problems);
+        if (problems) {
+            res.status(200).send(problems);
+        }
+        ;
+    }
+    catch (error) {
+        console.log(`--- problemsController/error:`, error);
+        res.status(500).send({ message: 'server error' });
+    }
+    ;
+}
+;
+
+
+/***/ }),
+
 /***/ "./server/controllers/reportsController.ts":
 /*!*************************************************!*\
   !*** ./server/controllers/reportsController.ts ***!
@@ -110,36 +258,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ reportsController)
 /* harmony export */ });
 /* harmony import */ var _models_Report__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Report */ "./server/models/Report.ts");
-/* harmony import */ var stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! stream */ "stream");
-/* harmony import */ var stream__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(stream__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _models_Area__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Area */ "./server/models/Area.ts");
+/* harmony import */ var _models_Note__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/Note */ "./server/models/Note.ts");
 
 
-// import * as sequelizeStream from 'node-sequelize-stream';
-// import { sequelizeConnection } from '../services/db';
-// sequelizeStream(sequelizeConnection, 50, true);
+
 async function reportsController(req, res) {
     console.log(`--- reportsController/req.body:`, req.body);
-    console.log(`--- reportsController/req.user:`, req.user);
-    console.log(`--- reportsController/req.files:`, req.files);
+    // console.log(
+    //     `--- reportsController/req.user:`, req.user
+    // );
+    // console.log(
+    //     `--- reportsController/req.files:`, req.files
+    // );
     try {
-        const stream = new stream__WEBPACK_IMPORTED_MODULE_1__.Writable();
-        const data = [];
-        stream.on('data', (chunk) => {
-            data.push(chunk);
+        const reports = await _models_Report__WEBPACK_IMPORTED_MODULE_0__.Report.findAll({
+            include: [
+                {
+                    model: _models_Area__WEBPACK_IMPORTED_MODULE_1__.Area,
+                    as: 'areas'
+                },
+                {
+                    model: _models_Note__WEBPACK_IMPORTED_MODULE_2__.Note,
+                    as: 'notes'
+                }
+            ]
         });
-        stream.on('end', () => {
-            new Promise(async (resolve) => {
-                const reports = await _models_Report__WEBPACK_IMPORTED_MODULE_0__.Report.findAll();
-                resolve(reports);
-            });
-        });
-        // const stream = Report. findAllWithStream()
-        stream.pipe(res);
+        console.log(`--- reportsController:`, reports);
+        if (reports) {
+            res.status(200).send(reports);
+        }
+        ;
+        // const readableStream = new Readable({
+        //     objectMode: true
+        // });
+        // // readableStream.push('ping');
+        // readableStream.read = async () => await sequelizeConnection.query('select * from reports');
+        // // readableStream.read = async () => await Report.findAll();
+        // const data: any[] = [];
+        // async () => {
+        //     for await (const chunk of readableStream) {
+        //       console.log(
+        //           `--- readableStream/length: \n${chunk.length}bytes: \n"${chunk.toString()}"\n`);
+        //       data.push(chunk as any);
+        //     }
+        // };
+        // readableStream.pipe(
+        //     res
+        // );
     }
     catch (error) {
+        console.log(`--- reportsController/error:`, error);
         res.status(500).send({ message: 'server error' });
     }
+    ;
 }
+;
 
 
 /***/ }),
@@ -158,16 +332,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/server */ "react-dom/server");
 /* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router */ "react-router");
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _client_app_App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../client/app/App */ "./client/app/App.tsx");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! fs */ "fs");
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _views_Html__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../views/Html */ "./server/views/Html.tsx");
-/* harmony import */ var _client_styledConfig_globalStyles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../client/styledConfig/globalStyles */ "./client/styledConfig/globalStyles.ts");
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _client_app_App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../client/app/App */ "./client/app/App.tsx");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _views_Html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../views/Html */ "./server/views/Html.tsx");
+/* harmony import */ var _client_styledConfig_globalStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../client/styledConfig/globalStyles */ "./client/styledConfig/globalStyles.ts");
 
 
 
@@ -177,20 +348,88 @@ __webpack_require__.r(__webpack_exports__);
 
 function rootController(req, res) {
     const jsFiles = [];
-    fs__WEBPACK_IMPORTED_MODULE_5___default().readdirSync('./dist/static/').forEach(file => {
+    fs__WEBPACK_IMPORTED_MODULE_4___default().readdirSync('./dist/static/').forEach(file => {
         if (file.split('.').pop() === 'js')
             jsFiles.push(file);
     });
     const context = {};
-    const sheet = new styled_components__WEBPACK_IMPORTED_MODULE_2__.ServerStyleSheet();
-    const staticMarkup = sheet.collectStyles(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router__WEBPACK_IMPORTED_MODULE_3__.StaticRouter, { context: context, location: req.path },
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_client_styledConfig_globalStyles__WEBPACK_IMPORTED_MODULE_7__["default"], null),
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_client_app_App__WEBPACK_IMPORTED_MODULE_4__.App, null)));
-    const staticStyles = sheet.getStyleElement();
+    if (context.url) {
+        res.redirect(context.url);
+    }
     res.status(200);
-    const stream = sheet.interleaveWithNodeStream((0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToNodeStream)(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_views_Html__WEBPACK_IMPORTED_MODULE_6__["default"], { scripts: jsFiles, styles: staticStyles }, staticMarkup)));
+    let didError = false;
+    const stream = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToPipeableStream)(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_views_Html__WEBPACK_IMPORTED_MODULE_5__["default"], { scripts: jsFiles },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, { context: context, location: req.path },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_client_styledConfig_globalStyles__WEBPACK_IMPORTED_MODULE_6__["default"], null),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_client_app_App__WEBPACK_IMPORTED_MODULE_3__.App, null))), {
+        // onShellReady() {
+        //     // The content above all Suspense boundaries is ready.
+        //     // If something errored before we started streaming, we set the error code appropriately.
+        //     res.statusCode = didError ? 500 : 200;
+        //     res.setHeader('Content-type', 'text/html');
+        //     stream.pipe(res);
+        // },
+        // onShellError(error) {
+        //     // Something errored before we could complete the shell so we emit an alternative shell.
+        //     res.statusCode = 500;
+        //     res.send(
+        //         '<!doctype html><p>Loading...</p><script src="clientrender.js"></script>'
+        //     );
+        // },
+        onAllReady() {
+            // If you don't want streaming, use this instead of onShellReady.
+            // This will fire after the entire page content is ready.
+            // You can use this for crawlers or static generation.
+            // res.statusCode = didError ? 500 : 200;
+            // res.setHeader('Content-type', 'text/html');
+            // stream.pipe(res);
+        },
+        onError(err) {
+            didError = true;
+            console.error(err);
+        }
+    });
     stream.pipe(res);
 }
+
+
+/***/ }),
+
+/***/ "./server/controllers/standartsController.ts":
+/*!***************************************************!*\
+  !*** ./server/controllers/standartsController.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ standartsController)
+/* harmony export */ });
+/* harmony import */ var _models_Standart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/Standart */ "./server/models/Standart.ts");
+
+async function standartsController(req, res) {
+    console.log(`--- standartsController/req.body:`, req.body);
+    // console.log(
+    //     `--- standartsController/req.user:`, req.user
+    // );
+    // console.log(
+    //     `--- standartsController/req.files:`, req.files
+    // );
+    try {
+        const standarts = await _models_Standart__WEBPACK_IMPORTED_MODULE_0__.Standart.findAll();
+        console.log(`--- standartsController:`, standarts);
+        if (standarts) {
+            res.status(200).send(standarts);
+        }
+        ;
+    }
+    catch (error) {
+        console.log(`--- standartsController/error:`, error);
+        res.status(500).send({ message: 'server error' });
+    }
+    ;
+}
+;
 
 
 /***/ }),
@@ -209,6 +448,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
 /* harmony import */ var _Problem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Problem */ "./server/models/Problem.ts");
+/* harmony import */ var _Sample__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Sample */ "./server/models/Sample.ts");
+
 
 
 
@@ -221,30 +462,23 @@ const Area = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.defin
     area_name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
     isSavedToReport: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().BOOLEAN),
     // problems: sequelize.STRING,
-    samples: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+    // samples: sequelize.STRING,
+    report_id: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().INTEGER)
 });
+// Area.belongsTo(
+//     Report,
+//     {
+//         foreignKey: "report_id"
+//     }
+// );
 Area.hasMany(_Problem__WEBPACK_IMPORTED_MODULE_2__.Problem, {
-    foreignKey: 'id'
+    foreignKey: 'id',
+    as: "problems"
 });
-// Area.belongsToMany(
-//     Problem, 
-//     { 
-//         through: AreaProblem,
-//         foreignKey: 'problem_id',
-//         // type: sequelize.INTEGER
-//         as: 'problems'
-//     }
-// );
-// Problem.belongsToMany(
-//     Area, 
-//     { 
-//         through: AreaProblem,
-//         foreignKey: 'area_id',
-//         // foreignKeyConstraint: false,
-//         // targetKey: 'id',
-//         // as: 'areas'
-//     }
-// );
+Area.hasMany(_Sample__WEBPACK_IMPORTED_MODULE_3__.Sample, {
+    foreignKey: 'id',
+    as: 'samples'
+});
 
 
 /***/ }),
@@ -270,8 +504,15 @@ const Note = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.defin
         autoIncrement: true,
         primaryKey: true
     },
-    text: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+    text: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    // report_id: sequelize.INTEGER
 });
+// Note.belongsTo(
+//     Report,
+//     {
+//         foreignKey: "report_id"
+//     }
+// );
 
 
 /***/ }),
@@ -307,10 +548,18 @@ const Problem = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.de
     // standarts: sequelize.STRING,
     profession_name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
     timeStamp: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
-    isSavedToReport: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().BOOLEAN)
+    isSavedToReport: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().BOOLEAN),
+    // area_id: sequelize.INTEGER
 });
+// Problem.belongsTo(
+//     Area,
+//     {
+//         foreignKey: "area_id"
+//     }
+// );
 Problem.hasMany(_Standart__WEBPACK_IMPORTED_MODULE_2__.Standart, {
-    foreignKey: 'id'
+    foreignKey: 'id',
+    as: "standarts"
 });
 
 
@@ -384,25 +633,49 @@ const Report = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.def
     // notes: sequelize.STRING
 });
 Report.hasMany(_Area__WEBPACK_IMPORTED_MODULE_2__.Area, {
-    foreignKey: "id"
+    foreignKey: "id",
+    as: "areas"
 });
 Report.hasMany(_Note__WEBPACK_IMPORTED_MODULE_3__.Note, {
-    foreignKey: 'id'
+    foreignKey: 'id',
+    as: "notes"
 });
-// Report.hasMany(
-//     AreaProblem,
-//     {
-//         foreignKey: 'id'
-//     }
-// );
-// Area.belongsTo(
-//     Report,
-//     {
-//         foreignKey: "id",
-//         as: 'areas',
-//         targetKey: 'id'
-//     }
-// );
+
+
+/***/ }),
+
+/***/ "./server/models/Sample.ts":
+/*!*********************************!*\
+  !*** ./server/models/Sample.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Sample": () => (/* binding */ Sample)
+/* harmony export */ });
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
+/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/db */ "./server/services/db.ts");
+
+
+const Sample = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.define('problems', {
+    id: {
+        type: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().INTEGER),
+        autoIncrement: true,
+        primaryKey: true
+    },
+    name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    details_of_eclipse: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    image: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    solution: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    cost: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    // standarts: sequelize.STRING,
+    profession_name: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    timeStamp: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    isSavedToReport: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().BOOLEAN),
+    // area_id: sequelize.INTEGER
+});
 
 
 /***/ }),
@@ -432,7 +705,8 @@ const Standart = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.d
     image: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
     whatToDo: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
     fault: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
-    profession: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING)
+    profession: (sequelize__WEBPACK_IMPORTED_MODULE_0___default().STRING),
+    // problem_id: sequelize.INTEGER
 });
 
 
@@ -525,11 +799,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _controllers_reportsController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/reportsController */ "./server/controllers/reportsController.ts");
+/* harmony import */ var _controllers_areasController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/areasController */ "./server/controllers/areasController.ts");
+/* harmony import */ var _controllers_problemsController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controllers/problemsController */ "./server/controllers/problemsController.ts");
+/* harmony import */ var _controllers_reportsController__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../controllers/reportsController */ "./server/controllers/reportsController.ts");
+/* harmony import */ var _controllers_standartsController__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../controllers/standartsController */ "./server/controllers/standartsController.ts");
+
+
+
 
 
 const reportsRouter = (0,express__WEBPACK_IMPORTED_MODULE_0__.Router)();
-reportsRouter.get('/reports', _controllers_reportsController__WEBPACK_IMPORTED_MODULE_1__["default"]);
+reportsRouter.get('/reports', _controllers_reportsController__WEBPACK_IMPORTED_MODULE_3__["default"]);
+reportsRouter.get('/areas', _controllers_areasController__WEBPACK_IMPORTED_MODULE_1__["default"]);
+reportsRouter.get('/problems', _controllers_problemsController__WEBPACK_IMPORTED_MODULE_2__["default"]);
+reportsRouter.get('/standarts', _controllers_standartsController__WEBPACK_IMPORTED_MODULE_4__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reportsRouter);
 
 
@@ -575,7 +858,7 @@ const sequelizeConnection = new sequelize__WEBPACK_IMPORTED_MODULE_0__.Sequelize
     dialect: "mysql",
     define: {
         timestamps: false,
-        // paranoid: true,
+        paranoid: true
     }
 });
 async function connect() {
@@ -626,6 +909,16 @@ const Html = ({ children, scripts, styles, title }) => {
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Html);
 
+
+/***/ }),
+
+/***/ "axios":
+/*!************************!*\
+  !*** external "axios" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("axios");
 
 /***/ }),
 
@@ -689,16 +982,6 @@ module.exports = require("passport");
 
 /***/ }),
 
-/***/ "process":
-/*!**************************!*\
-  !*** external "process" ***!
-  \**************************/
-/***/ ((module) => {
-
-module.exports = require("process");
-
-/***/ }),
-
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -719,13 +1002,13 @@ module.exports = require("react-dom/server");
 
 /***/ }),
 
-/***/ "react-router":
-/*!*******************************!*\
-  !*** external "react-router" ***!
-  \*******************************/
+/***/ "react-router-dom":
+/*!***********************************!*\
+  !*** external "react-router-dom" ***!
+  \***********************************/
 /***/ ((module) => {
 
-module.exports = require("react-router");
+module.exports = require("react-router-dom");
 
 /***/ }),
 
@@ -779,13 +1062,13 @@ module.exports = require("http");
 
 /***/ }),
 
-/***/ "stream":
-/*!*************************!*\
-  !*** external "stream" ***!
-  \*************************/
+/***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
 /***/ ((module) => {
 
-module.exports = require("stream");
+module.exports = require("process");
 
 /***/ })
 
@@ -865,6 +1148,7 @@ var __webpack_exports__ = {};
   \***************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "connection": () => (/* binding */ connection),
 /* harmony export */   "serverIo": () => (/* binding */ serverIo)
 /* harmony export */ });
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ "express");
@@ -929,6 +1213,7 @@ server.use(passport__WEBPACK_IMPORTED_MODULE_3___default().session());
 server.use(_routes_reportsRouter__WEBPACK_IMPORTED_MODULE_10__["default"]);
 server.use(express__WEBPACK_IMPORTED_MODULE_0___default()["static"]("dist/static"));
 server.use(_routes_root__WEBPACK_IMPORTED_MODULE_2__["default"]);
+let connection;
 async function start() {
     try {
         await (0,_services_db__WEBPACK_IMPORTED_MODULE_11__.connect)();

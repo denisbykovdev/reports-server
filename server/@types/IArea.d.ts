@@ -9,6 +9,7 @@ export interface IArea {
     isSavedToReport?: boolean;
     // problems?: string[];
     // samples?: string[];
+    report_id?: number;
 }
 
 export interface IAreaCreation extends Optional<IArea, 'id' | 'problems' | 'samples' | 'isSavedToReport'> {}

@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
 import { Report } from '../models/Report';
-import { Writable } from 'stream';
-import { pipeline } from 'stream/promises';
-// import * as sequelizeStream from 'node-sequelize-stream';
-// import { sequelizeConnection } from '../services/db';
-
-// sequelizeStream(sequelizeConnection, 50, true);
+import { Readable } from 'stream';
+import { Area } from '../models/Area';
+import { Note } from '../models/Note';
+import { sequelizeConnection } from '../services/db';
 
 export default async function reportsController(
     req: Request,
@@ -14,47 +12,61 @@ export default async function reportsController(
     console.log(
         `--- reportsController/req.body:`, req.body
     );
-    console.log(
-        `--- reportsController/req.user:`, req.user
-    );
-    console.log(
-        `--- reportsController/req.files:`, req.files
-    );
+    // console.log(
+    //     `--- reportsController/req.user:`, req.user
+    // );
+    // console.log(
+    //     `--- reportsController/req.files:`, req.files
+    // );
     try {
-        const stream = new Writable();
+        const reports = await Report.findAll({
+            include: [
+                {
+                    model: Area,
+                    as: 'areas'
+                },
+                {
+                    model: Note,
+                    as: 'notes'
+                }
+            ]
+        });
 
-        const data = [];
+        console.log(`--- reportsController:`, reports);
 
-        stream.on(
-            'data',
-            (
-                chunk
-            ) => {
-                data.push(
-                    chunk as never
-                );
-            }
-        );
-        
-        stream.on(
-            'end',
-            () => {
-                new Promise(
-                    async resolve => {
-                        const reports = await Report.findAll();
-                        resolve(reports);
-                    }
-                );
-            }
-        );
+        if(reports) {
+            res.status(200).send(reports);
+        };
 
-        // const stream = Report. findAllWithStream()
-        
-        stream.pipe(
-            res
-        );
+        // const readableStream = new Readable({
+        //     objectMode: true
+        // });
+
+        // // readableStream.push('ping');
+
+        // readableStream.read = async () => await sequelizeConnection.query('select * from reports');
+        // // readableStream.read = async () => await Report.findAll();
+
+        // const data: any[] = [];
+
+        // async () => {
+        //     for await (const chunk of readableStream) {
+        //       console.log(
+        //           `--- readableStream/length: \n${chunk.length}bytes: \n"${chunk.toString()}"\n`);
+
+        //       data.push(chunk as any);
+        //     }
+        // };
+
+        // readableStream.pipe(
+        //     res
+        // );
 
     } catch (error) {
-        res.status(500).send({ message: 'server error' })
-    }
-}
+        console.log(
+            `--- reportsController/error:`,
+            error
+        );
+        res.status(500).send({ message: 'server error' });
+    };
+};

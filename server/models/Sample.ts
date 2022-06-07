@@ -1,11 +1,8 @@
 import sequelize from "sequelize";
-import { sequelizeConnection } from "../services/db";
 import { IProblemInstance } from "../@types/IProblem";
-import { Standart } from "./Standart";
-import { Report } from "./Report";
-import { Area } from "./Area";
+import { sequelizeConnection } from "../services/db";
 
-export const Problem = sequelizeConnection.define<IProblemInstance>(
+export const Sample = sequelizeConnection.define<IProblemInstance>(
     'problems',
     {
         id: {
@@ -23,20 +20,5 @@ export const Problem = sequelizeConnection.define<IProblemInstance>(
         timeStamp: sequelize.STRING,
         isSavedToReport: sequelize.BOOLEAN,
         // area_id: sequelize.INTEGER
-    }
-);
-
-// Problem.belongsTo(
-//     Area,
-//     {
-//         foreignKey: "area_id"
-//     }
-// );
-
-Problem.hasMany(
-    Standart,
-    {
-        foreignKey: 'id',
-        as: "standarts"
     }
 );

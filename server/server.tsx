@@ -60,6 +60,8 @@ server.use(express.static("dist/static"))
 
 server.use(rootRouter)
 
+export let connection
+
 async function start(): Promise<void> {
     try {
         await connect()

@@ -60,29 +60,16 @@ export const Report = sequelizeConnection.define<IReportInstance>(
 Report.hasMany(
     Area, 
     { 
-        foreignKey: "id"
+        foreignKey: "id",
+        as: "areas"
     }
 );
 
 Report.hasMany(
     Note,
     {
-        foreignKey: 'id'
+        foreignKey: 'id',
+        as: "notes"
     }
 );
 
-// Report.hasMany(
-//     AreaProblem,
-//     {
-//         foreignKey: 'id'
-//     }
-// );
-
-// Area.belongsTo(
-//     Report,
-//     {
-//         foreignKey: "id",
-//         as: 'areas',
-//         targetKey: 'id'
-//     }
-// );

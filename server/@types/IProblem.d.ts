@@ -12,6 +12,7 @@ export interface IProblem {
     profession_name?: string;
     timeStamp?: string;
     isSavedToReport?: boolean;
+    area_id?: number;
 }
 
 export interface IProblemCreation extends Optional<IProblem, 'id'|'details_of_eclipse'|'image'|'solution'|'cost'|'profession_name'|'isSavedToReport'> {}

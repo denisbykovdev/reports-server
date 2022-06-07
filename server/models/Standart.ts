@@ -14,6 +14,7 @@ export const Standart = sequelizeConnection.define<IStandartInstance>(
         image: sequelize.STRING,
         whatToDo: sequelize.STRING,
         fault: sequelize.STRING,
-        profession: sequelize.STRING
+        profession: sequelize.STRING,
+        // problem_id: sequelize.INTEGER
     }
 );

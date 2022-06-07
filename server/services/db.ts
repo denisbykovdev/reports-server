@@ -6,7 +6,7 @@ export const sequelizeConnection = new Sequelize(
         dialect: "mysql",
         define: {
             timestamps: false,
-            // paranoid: true,
+            paranoid: true
         }
     }
 );

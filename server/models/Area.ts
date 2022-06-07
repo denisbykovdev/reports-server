@@ -1,8 +1,9 @@
 import sequelize from "sequelize";
 import { IAreaInstance } from "../@types/IArea";
 import { sequelizeConnection } from "../services/db";
-import { AreaProblem } from "./AreaProblem";
 import { Problem } from "./Problem";
+import { Report } from "./Report";
+import { Sample } from "./Sample";
 
 export const Area = sequelizeConnection.define<IAreaInstance>(
     'areas',
@@ -15,34 +16,30 @@ export const Area = sequelizeConnection.define<IAreaInstance>(
         area_name: sequelize.STRING,
         isSavedToReport: sequelize.BOOLEAN,
         // problems: sequelize.STRING,
-        samples: sequelize.STRING
+        // samples: sequelize.STRING,
+        report_id: sequelize.INTEGER
     }
 );
+
+// Area.belongsTo(
+//     Report,
+//     {
+//         foreignKey: "report_id"
+//     }
+// );
 
 Area.hasMany(
     Problem,
     {
-        foreignKey: 'id'
+        foreignKey: 'id',
+        as: "problems"
     }
 );
 
-// Area.belongsToMany(
-//     Problem, 
-//     { 
-//         through: AreaProblem,
-//         foreignKey: 'problem_id',
-//         // type: sequelize.INTEGER
-//         as: 'problems'
-//     }
-// );
-
-// Problem.belongsToMany(
-//     Area, 
-//     { 
-//         through: AreaProblem,
-//         foreignKey: 'area_id',
-//         // foreignKeyConstraint: false,
-//         // targetKey: 'id',
-//         // as: 'areas'
-//     }
-// );
+Area.hasMany(
+    Sample,
+    {
+        foreignKey: 'id',
+        as: 'samples'
+    }
+);
