@@ -6,6 +6,8 @@ import { IProblem } from '../../server/@types/IProblem';
 import { IReport } from '../../server/@types/IReport';
 import { IStandart } from '../../server/@types/IStandart';
 
+const url = `https://reports-server.herokuapp.com`;
+
 export const App = () => {
     const [readedReports, setReports] = useState();
     const [readedAreas, setAreas] = useState();
@@ -16,7 +18,7 @@ export const App = () => {
         (
             async() => {
                 const { data: reports } = await axios.get(
-                    `http://localhost:8000/reports`
+                    `${url}/reports`
                 );
 
                 console.log(
@@ -27,7 +29,7 @@ export const App = () => {
                 setReports(reports);
 
                 const { data: areas } = await axios.get(
-                    `http://localhost:8000/areas`
+                    `${url}/areas`
                 );
 
                 console.log(
@@ -38,7 +40,7 @@ export const App = () => {
                 setAreas(areas);
 
                 const { data: problems } = await axios.get(
-                    `http://localhost:8000/problems`
+                    `${url}/problems`
                 );
 
                 console.log(
@@ -49,7 +51,7 @@ export const App = () => {
                 setProblems(problems);
 
                 const { data: standarts } = await axios.get(
-                    `http://localhost:8000/standarts`
+                    `${url}/standarts`
                 );
 
                 console.log(

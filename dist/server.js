@@ -18,6 +18,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
+const url = `https://reports-server.herokuapp.com`;
 const App = () => {
     const [readedReports, setReports] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const [readedAreas, setAreas] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
@@ -25,16 +26,16 @@ const App = () => {
     const [readedStandarts, setStandarts] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         (async () => {
-            const { data: reports } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/reports`);
+            const { data: reports } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`${url}/reports`);
             console.log(`--- client/reports:`, reports);
             setReports(reports);
-            const { data: areas } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/areas`);
+            const { data: areas } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`${url}/areas`);
             console.log(`--- client/areas:`, areas);
             setAreas(areas);
-            const { data: problems } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/problems`);
+            const { data: problems } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`${url}/problems`);
             console.log(`--- client/problems:`, problems);
             setProblems(problems);
-            const { data: standarts } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/standarts`);
+            const { data: standarts } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`${url}/standarts`);
             console.log(`--- client/standarts:`, standarts);
             setStandarts(standarts);
         })();
