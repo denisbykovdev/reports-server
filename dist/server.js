@@ -774,81 +774,6 @@ const Standart = _services_db__WEBPACK_IMPORTED_MODULE_1__.sequelizeConnection.d
 
 /***/ }),
 
-/***/ "./server/models/User.ts":
-/*!*******************************!*\
-  !*** ./server/models/User.ts ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "userSchema": () => (/* binding */ userSchema)
-/* harmony export */ });
-/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ "mongoose");
-/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);
-
-const userSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__.Schema({
-    // _id: Types.ObjectId,
-    phone: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    isNewUser: {
-        type: Boolean,
-        require: false
-    },
-    name: {
-        type: String
-    },
-    surname: {
-        type: String
-    },
-    profileName: {
-        type: String
-    },
-    inviter: {
-        type: String
-    },
-    verified: {
-        type: Boolean,
-    },
-    status: {
-        type: String
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    token: {
-        type: String,
-        required: false,
-        unique: true
-    },
-    avatarId: {
-        type: mongoose__WEBPACK_IMPORTED_MODULE_0__.Types.ObjectId || String,
-        required: false
-    },
-    avatarName: {
-        type: String,
-        required: false
-    },
-    avatar: {
-        type: String,
-        required: false
-    }
-});
-// export interface UserDocument extends Document {
-//     fullName: string;
-//     createdAt: Date;
-//     updatedAt: Date;
-// };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,mongoose__WEBPACK_IMPORTED_MODULE_0__.model)('User', userSchema));
-
-
-/***/ }),
-
 /***/ "./server/routes/reportsRouter.ts":
 /*!****************************************!*\
   !*** ./server/routes/reportsRouter.ts ***!
@@ -1021,16 +946,6 @@ module.exports = require("dotenv/config");
 /***/ ((module) => {
 
 module.exports = require("express");
-
-/***/ }),
-
-/***/ "mongoose":
-/*!***************************!*\
-  !*** external "mongoose" ***!
-  \***************************/
-/***/ ((module) => {
-
-module.exports = require("mongoose");
 
 /***/ }),
 
@@ -1220,20 +1135,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes_root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes/root */ "./server/routes/root.ts");
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! passport */ "passport");
 /* harmony import */ var passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(passport__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _models_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./models/User */ "./server/models/User.ts");
-/* harmony import */ var cookie_session__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! cookie-session */ "cookie-session");
-/* harmony import */ var cookie_session__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(cookie_session__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! cookie-parser */ "cookie-parser");
-/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(cookie_parser__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! process */ "process");
-/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(process__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! socket.io */ "socket.io");
-/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! http */ "http");
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _routes_reportsRouter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./routes/reportsRouter */ "./server/routes/reportsRouter.ts");
-/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./services/db */ "./server/services/db.ts");
-
+/* harmony import */ var cookie_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! cookie-session */ "cookie-session");
+/* harmony import */ var cookie_session__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(cookie_session__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! cookie-parser */ "cookie-parser");
+/* harmony import */ var cookie_parser__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(cookie_parser__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! process */ "process");
+/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(process__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! socket.io */ "socket.io");
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! http */ "http");
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _routes_reportsRouter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./routes/reportsRouter */ "./server/routes/reportsRouter.ts");
+/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/db */ "./server/services/db.ts");
 
 
 
@@ -1246,44 +1159,45 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const server = express__WEBPACK_IMPORTED_MODULE_0___default()();
-const httpServer = http__WEBPACK_IMPORTED_MODULE_9__.createServer(server);
-const serverIo = new socket_io__WEBPACK_IMPORTED_MODULE_8__.Server(httpServer, { 'pingTimeout': 200000, 'pingInterval': 25000 });
+const httpServer = http__WEBPACK_IMPORTED_MODULE_8__.createServer(server);
+const serverIo = new socket_io__WEBPACK_IMPORTED_MODULE_7__.Server(httpServer, { 'pingTimeout': 200000, 'pingInterval': 25000 });
 server.use(express__WEBPACK_IMPORTED_MODULE_0___default().json());
 server.use(express__WEBPACK_IMPORTED_MODULE_0___default().urlencoded({
     extended: false
 }));
-passport__WEBPACK_IMPORTED_MODULE_3___default().serializeUser((user, done) => {
-    done(null, user);
-});
-passport__WEBPACK_IMPORTED_MODULE_3___default().deserializeUser((id, done) => {
-    try {
-        const user = _models_User__WEBPACK_IMPORTED_MODULE_4__["default"].findOne({ _id: id });
-        done(null, user);
-    }
-    catch (err) {
-        done(err);
-    }
-});
-server.use(cookie_session__WEBPACK_IMPORTED_MODULE_5___default()({
+// passport.serializeUser((user, done) => {
+//     done(null, user)
+// })
+// passport.deserializeUser(
+//     (id, done): any => {
+//         try {
+//             const user = User.findOne({ _id: id })
+//             done(null, user)
+//         } catch (err) {
+//             done(err)
+//         }
+//     }
+// )
+server.use(cookie_session__WEBPACK_IMPORTED_MODULE_4___default()({
     name: "session",
     keys: ['cookieKey'],
     maxAge: 24 * 60 * 60 * 100
 }));
-server.use(cookie_parser__WEBPACK_IMPORTED_MODULE_6___default()());
+server.use(cookie_parser__WEBPACK_IMPORTED_MODULE_5___default()());
 server.use(passport__WEBPACK_IMPORTED_MODULE_3___default().initialize());
 server.use(passport__WEBPACK_IMPORTED_MODULE_3___default().session());
-server.use(_routes_reportsRouter__WEBPACK_IMPORTED_MODULE_10__["default"]);
+server.use(_routes_reportsRouter__WEBPACK_IMPORTED_MODULE_9__["default"]);
 server.use(express__WEBPACK_IMPORTED_MODULE_0___default()["static"]("dist/static"));
 server.use(_routes_root__WEBPACK_IMPORTED_MODULE_2__["default"]);
 let connection;
 async function start() {
     try {
-        await (0,_services_db__WEBPACK_IMPORTED_MODULE_11__.connect)();
-        httpServer.listen((process__WEBPACK_IMPORTED_MODULE_7___default().env.PORT), () => console.log(`--- server/start/port: ${(process__WEBPACK_IMPORTED_MODULE_7___default().env.PORT)}`));
+        await (0,_services_db__WEBPACK_IMPORTED_MODULE_10__.connect)();
+        httpServer.listen((process__WEBPACK_IMPORTED_MODULE_6___default().env.PORT), () => console.log(`--- server/start/port: ${(process__WEBPACK_IMPORTED_MODULE_6___default().env.PORT)}`));
     }
     catch (error) {
         console.log('--- server/start/error:', error);
-        process__WEBPACK_IMPORTED_MODULE_7___default().exit(1);
+        process__WEBPACK_IMPORTED_MODULE_6___default().exit(1);
     }
 }
 void start();

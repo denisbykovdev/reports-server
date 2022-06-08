@@ -2,7 +2,6 @@ import express from 'express'
 import 'dotenv/config'
 import rootRouter from './routes/root'
 import passport from 'passport'
-import User from './models/User'
 import cookieSession from 'cookie-session'
 import cookieParser from 'cookie-parser'
 import process from 'process'
@@ -25,20 +24,20 @@ server.use(
     })
 )
 
-passport.serializeUser((user, done) => {
-    done(null, user)
-})
+// passport.serializeUser((user, done) => {
+//     done(null, user)
+// })
 
-passport.deserializeUser(
-    (id, done): any => {
-        try {
-            const user = User.findOne({ _id: id })
-            done(null, user)
-        } catch (err) {
-            done(err)
-        }
-    }
-)
+// passport.deserializeUser(
+//     (id, done): any => {
+//         try {
+//             const user = User.findOne({ _id: id })
+//             done(null, user)
+//         } catch (err) {
+//             done(err)
+//         }
+//     }
+// )
 
 server.use(
     cookieSession({
