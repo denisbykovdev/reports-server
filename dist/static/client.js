@@ -39906,7 +39906,7 @@ const App = () => {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         (async () => {
             const { data: reports } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/reports`);
-            console.log(`--- client/data:`, reports);
+            console.log(`--- client/reports:`, reports);
             setReports(reports);
             const { data: areas } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/areas`);
             console.log(`--- client/areas:`, areas);
@@ -39916,7 +39916,7 @@ const App = () => {
             setProblems(problems);
             const { data: standarts } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/standarts`);
             console.log(`--- client/standarts:`, standarts);
-            setReports(standarts);
+            setStandarts(standarts);
         })();
     }, []);
     return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { className: 'app-container' },
@@ -39924,7 +39924,10 @@ const App = () => {
         react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
             readedReports && readedReports.map((report, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
                 react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
-                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.report_adress)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null,
+                        "report: ",
+                        report.report_adress,
+                        JSON.stringify(report.report_adress)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.areas)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.notes))))),
             readedAreas && readedAreas.map((area, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },

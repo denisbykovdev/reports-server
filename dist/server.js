@@ -26,7 +26,7 @@ const App = () => {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         (async () => {
             const { data: reports } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/reports`);
-            console.log(`--- client/data:`, reports);
+            console.log(`--- client/reports:`, reports);
             setReports(reports);
             const { data: areas } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/areas`);
             console.log(`--- client/areas:`, areas);
@@ -36,7 +36,7 @@ const App = () => {
             setProblems(problems);
             const { data: standarts } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`http://localhost:8000/standarts`);
             console.log(`--- client/standarts:`, standarts);
-            setReports(standarts);
+            setStandarts(standarts);
         })();
     }, []);
     return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { className: 'app-container' },
@@ -44,7 +44,10 @@ const App = () => {
         react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
             readedReports && readedReports.map((report, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
                 react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
-                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.report_adress)),
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null,
+                        "report: ",
+                        report.report_adress,
+                        JSON.stringify(report.report_adress)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.areas)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(report.notes))))),
             readedAreas && readedAreas.map((area, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
@@ -290,21 +293,79 @@ async function reportsController(req, res) {
         }
         ;
         // const readableStream = new Readable({
-        //     objectMode: true
-        // });
-        // // readableStream.push('ping');
-        // readableStream.read = async () => await sequelizeConnection.query('select * from reports');
-        // // readableStream.read = async () => await Report.findAll();
-        // const data: any[] = [];
-        // async () => {
-        //     for await (const chunk of readableStream) {
-        //       console.log(
-        //           `--- readableStream/length: \n${chunk.length}bytes: \n"${chunk.toString()}"\n`);
-        //       data.push(chunk as any);
+        //     objectMode: true,
+        //     // highWaterMark: 1200,
+        //     async read() {
+        //         //string stream
+        //         // const reports = await sequelizeConnection.query('select * from reports');
+        //         //object stream
+        //         const reports = await Report.findAll(
+        //             {
+        //                 include: [
+        //                     {
+        //                         model: Area,
+        //                         as: 'areas'
+        //                     },
+        //                     {
+        //                         model: Note,
+        //                         as: 'notes'
+        //                     }
+        //                 ]
+        //             }
+        //         );
+        //         // string stream
+        //         // let isContinuedStream = this.push(reports);
+        //         // if(!isContinuedStream) this.push(null);
+        //         //object stream
+        //         this.push(reports);
+        //         this.push(null);
+        //         console.log(
+        //             `\n--- readableStream/reports(pure):\n`, reports,
+        //             `\n--- readableStreamreports:\n`, this
+        //         );
         //     }
+        // });
+        // const reports = await sequelizeConnection.query('select * from reports');
+        // let data: any[] = [];
+        //Promisifing stream
+        // await new Promise((resolve, reject) => {
+        //     readableStream.on("data", (chunk) => {
+        //         console.log(
+        //             `--- stream/data:`, JSON.stringify(chunk)
+        //         );
+        //         data.push(chunk);
+        //     });
+        //     readableStream.on("end", () => {
+        //         console.log(
+        //             `--- stream/end`
+        //         );
+        //         resolve;
+        //     });
+        //     readableStream.on("error", (error) => {
+        //         console.log(
+        //             `--- stream/error:`, error
+        //         );
+        //         reject;
+        //     });
+        // });
+        //Async iterable stream
+        // try {
+        //     for await (const chunk of readableStream) {
+        //         // data.push(chunk);
+        //         data = [...chunk];
+        //         console.log(
+        //             `\n--- readableStream/chunk length: ${chunk.bytes}bytes`,
+        //             `\n--- readableStream/chunk(pure):\n`, chunk,
+        //             `\n--- readableStream/data:\n`, data
+        //         );
+        //     };
+        // } catch (error) {
+        //     console.log(
+        //             `--- readableStream/error:`, error
+        //     );
         // };
         // readableStream.pipe(
-        //     res
+        //     res.send(data)
         // );
     }
     catch (error) {

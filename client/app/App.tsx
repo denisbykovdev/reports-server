@@ -20,7 +20,7 @@ export const App = () => {
                 );
 
                 console.log(
-                    `--- client/data:`,
+                    `--- client/reports:`,
                     reports
                 );
 
@@ -57,7 +57,7 @@ export const App = () => {
                     standarts
                 );
 
-                setReports(standarts);
+                setStandarts(standarts);
             }
         )();
     }, []);
@@ -72,6 +72,7 @@ export const App = () => {
                             <div key={i}>
                                 <Suspense fallback={<span>Loading ...</span>}>
                                     <div>
+                                        report: {report.report_adress}
                                         {JSON.stringify(report.report_adress)}
                                     </div>
                                     <div>
