@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { Suspense, useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { IArea } from '../../server/@types/IArea';
 import { IProblem } from '../../server/@types/IProblem';
 import { IReport } from '../../server/@types/IReport';
 import { IStandart } from '../../server/@types/IStandart';
 
 const url = `https://reports-server.herokuapp.com`;
+// const url = `http://localhost:8000`
 
 export const App = () => {
     const [readedReports, setReports] = useState();
@@ -16,7 +16,7 @@ export const App = () => {
 
     useEffect(() => {
         (
-            async() => {
+            async () => {
                 const { data: reports } = await axios.get(
                     `${url}/reports`
                 );
@@ -64,13 +64,17 @@ export const App = () => {
         )();
     }, []);
 
-    return(
-        <div className='app-container'>
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%'
+        }}>
             reports server/data:
             <Suspense fallback={<span>Loading ...</span>}>
                 {
                     readedReports && (readedReports as any).map(
-                        (report: IReport, i: number) => 
+                        (report: IReport, i: number) =>
                             <div key={i}>
                                 <Suspense fallback={<span>Loading ...</span>}>
                                     <div>
@@ -83,13 +87,13 @@ export const App = () => {
                                     <div>
                                         {JSON.stringify(report.notes)}
                                     </div>
-                                </Suspense> 
+                                </Suspense>
                             </div>
                     )
                 }
                 {
                     readedAreas && (readedAreas as any).map(
-                        (area: IArea, i: number) => 
+                        (area: IArea, i: number) =>
                             <div key={i}>
                                 <Suspense fallback={<span>Loading ...</span>}>
                                     <div>
@@ -101,13 +105,13 @@ export const App = () => {
                                     <div>
                                         {JSON.stringify(area.samples)}
                                     </div>
-                                </Suspense> 
+                                </Suspense>
                             </div>
                     )
                 }
                 {
                     readedProblems && (readedProblems as any).map(
-                        (problem: IProblem, i: number) => 
+                        (problem: IProblem, i: number) =>
                             <div key={i}>
                                 <Suspense fallback={<span>Loading ...</span>}>
                                     <div>
@@ -116,20 +120,28 @@ export const App = () => {
                                     <div>
                                         {JSON.stringify(problem.standarts)}
                                     </div>
-                                    <img
-                                        src={`data:image/png;base64, ${problem.image}`}
-                                        style={{
-                                            width: 100,
-                                            height: 100
-                                        }}
-                                    />
-                                </Suspense> 
+                                    {
+                                        problem.image &&
+                                        problem.image.length > 0 &&
+                                        problem.image.map(
+                                            (im, i) =>
+                                                <img
+                                                    src={`data:image/png;base64, ${problem.image}`}
+                                                    style={{
+                                                        width: 300,
+                                                        height: 300,
+                                                        objectFit: 'contain'
+                                                    }}
+                                                />
+                                        )
+                                    }
+                                </Suspense>
                             </div>
                     )
                 }
                 {
                     readedStandarts && (readedStandarts as any).map(
-                        (standart: IStandart, i: number) => 
+                        (standart: IStandart, i: number) =>
                             <div key={i}>
                                 <Suspense fallback={<span>Loading ...</span>}>
                                     <div>
@@ -138,11 +150,12 @@ export const App = () => {
                                     <img
                                         src={`data:image/png;base64, ${standart.image}`}
                                         style={{
-                                            width: 100,
-                                            height: 100
+                                            width: 300,
+                                            height: 300,
+                                            objectFit: 'contain'
                                         }}
                                     />
-                                </Suspense> 
+                                </Suspense>
                             </div>
                     )
                 }

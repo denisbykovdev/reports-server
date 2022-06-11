@@ -69,7 +69,9 @@ async function start(): Promise<void> {
             process.env.PORT,
             () =>
                 console.log(
-                    `--- server/start/port: ${process.env.PORT as string}`
+                    `--- server/start:`,
+                    process.env.APP_URL as string,
+                    process.env.PORT as string
                 )
         )
         

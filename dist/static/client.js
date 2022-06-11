@@ -39899,6 +39899,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const url = `https://reports-server.herokuapp.com`;
+// const url = `http://localhost:8000`
 const App = () => {
     const [readedReports, setReports] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const [readedAreas, setAreas] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
@@ -39920,7 +39921,11 @@ const App = () => {
             setStandarts(standarts);
         })();
     }, []);
-    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { className: 'app-container' },
+    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%'
+        } },
         "reports server/data:",
         react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
             readedReports && readedReports.map((report, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
@@ -39940,16 +39945,20 @@ const App = () => {
                 react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(problem.name)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(problem.standarts)),
-                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${problem.image}`, style: {
-                            width: 100,
-                            height: 100
-                        } })))),
+                    problem.image &&
+                        problem.image.length > 0 &&
+                        problem.image.map((im, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${problem.image}`, style: {
+                                width: 300,
+                                height: 300,
+                                objectFit: 'contain'
+                            } }))))),
             readedStandarts && readedStandarts.map((standart, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
                 react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(standart.id)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${standart.image}`, style: {
-                            width: 100,
-                            height: 100
+                            width: 300,
+                            height: 300,
+                            objectFit: 'contain'
                         } })))))));
 };
 

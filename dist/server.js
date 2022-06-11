@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const url = `https://reports-server.herokuapp.com`;
+// const url = `http://localhost:8000`
 const App = () => {
     const [readedReports, setReports] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const [readedAreas, setAreas] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
@@ -40,7 +41,11 @@ const App = () => {
             setStandarts(standarts);
         })();
     }, []);
-    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { className: 'app-container' },
+    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%'
+        } },
         "reports server/data:",
         react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
             readedReports && readedReports.map((report, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
@@ -60,16 +65,20 @@ const App = () => {
                 react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(problem.name)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(problem.standarts)),
-                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${problem.image}`, style: {
-                            width: 100,
-                            height: 100
-                        } })))),
+                    problem.image &&
+                        problem.image.length > 0 &&
+                        problem.image.map((im, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${problem.image}`, style: {
+                                width: 300,
+                                height: 300,
+                                objectFit: 'contain'
+                            } }))))),
             readedStandarts && readedStandarts.map((standart, i) => react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { key: i },
                 react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react__WEBPACK_IMPORTED_MODULE_1__.Suspense, { fallback: react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, "Loading ...") },
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, JSON.stringify(standart.id)),
                     react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", { src: `data:image/png;base64, ${standart.image}`, style: {
-                            width: 100,
-                            height: 100
+                            width: 300,
+                            height: 300,
+                            objectFit: 'contain'
                         } })))))));
 };
 
@@ -236,7 +245,18 @@ async function problemsController(req, res) {
         });
         console.log(`--- problemsController:`, problems);
         if (problems) {
-            res.status(200).send(problems);
+            const fullProblems = problems.map(problem => ({
+                name: problem.name,
+                id: problem.id,
+                profession_name: problem.profession_name,
+                details_of_eclipse: problem.details_of_eclipse,
+                cost: problem.cost,
+                standarts: problem.standarts,
+                solution: problem.solution,
+                isSavedToReport: false,
+                image: [process.env.TEST_IMAGE]
+            }));
+            res.status(200).send(fullProblems);
         }
         ;
     }
@@ -481,7 +501,15 @@ async function standartsController(req, res) {
         const standarts = await _models_Standart__WEBPACK_IMPORTED_MODULE_0__.Standart.findAll();
         console.log(`--- standartsController:`, standarts);
         if (standarts) {
-            res.status(200).send(standarts);
+            const fullStandarts = standarts.map(standart => ({
+                id: standart.id,
+                text: standart.text,
+                whatToDo: standart.whatToDo,
+                fault: standart.fault,
+                profession: standart.profession,
+                image: process.env.TEST_IMAGE
+            }));
+            res.status(200).send(fullStandarts);
         }
         ;
     }
@@ -1193,7 +1221,7 @@ let connection;
 async function start() {
     try {
         await (0,_services_db__WEBPACK_IMPORTED_MODULE_10__.connect)();
-        httpServer.listen((process__WEBPACK_IMPORTED_MODULE_6___default().env.PORT), () => console.log(`--- server/start/port: ${(process__WEBPACK_IMPORTED_MODULE_6___default().env.PORT)}`));
+        httpServer.listen((process__WEBPACK_IMPORTED_MODULE_6___default().env.PORT), () => console.log(`--- server/start:`, (process__WEBPACK_IMPORTED_MODULE_6___default().env.APP_URL), (process__WEBPACK_IMPORTED_MODULE_6___default().env.PORT)));
     }
     catch (error) {
         console.log('--- server/start/error:', error);

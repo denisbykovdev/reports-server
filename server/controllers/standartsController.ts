@@ -19,8 +19,19 @@ export default async function standartsController(
 
         console.log(`--- standartsController:`, standarts);
 
-        if(standarts) {
-            res.status(200).send(standarts);
+        if (standarts) {
+            const fullStandarts = standarts.map(
+                standart =>
+                ({
+                    id: standart.id,
+                    text: standart.text,
+                    whatToDo: standart.whatToDo,
+                    fault: standart.fault,
+                    profession: standart.profession,
+                    image: process.env.TEST_IMAGE as string
+                })
+            );
+            res.status(200).send(fullStandarts);
         };
 
     } catch (error) {

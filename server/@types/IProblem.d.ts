@@ -5,7 +5,7 @@ export interface IProblem {
     id?: number;
     name: string;
     details_of_eclipse?: string;
-    image?: string;
+    image?: string[];
     solution?: string;
     cost?: string;
     standarts?: IStandart[];
