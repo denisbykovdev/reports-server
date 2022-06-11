@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Problem } from '../models/Problem';
 import { Standart } from '../models/Standart';
+import { TestImage } from '../views/TestImage';
 
 export default async function problemsController(
     req: Request,
@@ -39,7 +40,7 @@ export default async function problemsController(
                     standarts: problem.standarts,
                     solution: problem.solution,
                     isSavedToReport: false,
-                    image: [process.env.TEST_IMAGE as string]
+                    image: [TestImage as string]
                 })
             )
             res.status(200).send(fullProblems);

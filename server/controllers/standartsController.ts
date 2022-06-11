@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Standart } from '../models/Standart';
+import { TestImage } from '../views/TestImage';
 
 export default async function standartsController(
     req: Request,
@@ -28,7 +29,7 @@ export default async function standartsController(
                     whatToDo: standart.whatToDo,
                     fault: standart.fault,
                     profession: standart.profession,
-                    image: process.env.TEST_IMAGE as string
+                    image: TestImage as string
                 })
             );
             res.status(200).send(fullStandarts);
