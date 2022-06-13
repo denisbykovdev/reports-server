@@ -31,7 +31,7 @@ export const Area = sequelizeConnection.define<IAreaInstance>(
 Area.hasMany(
     Problem,
     {
-        foreignKey: 'id',
+        foreignKey: 'area_name',
         as: "problems"
     }
 );
@@ -39,7 +39,7 @@ Area.hasMany(
 Area.hasMany(
     Sample,
     {
-        foreignKey: 'id',
+        foreignKey: 'area_name',
         as: 'samples'
     }
 );

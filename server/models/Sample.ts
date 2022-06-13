@@ -1,6 +1,7 @@
 import sequelize from "sequelize";
 import { IProblemInstance } from "../@types/IProblem";
 import { sequelizeConnection } from "../services/db";
+import { Standart } from "./Standart";
 
 export const Sample = sequelizeConnection.define<IProblemInstance>(
     'problems',
@@ -20,5 +21,13 @@ export const Sample = sequelizeConnection.define<IProblemInstance>(
         timeStamp: sequelize.STRING,
         isSavedToReport: sequelize.BOOLEAN,
         // area_id: sequelize.INTEGER
+    }
+);
+
+Sample.hasMany(
+    Standart,
+    {
+        foreignKey: 'id',
+        as: "standarts"
     }
 );

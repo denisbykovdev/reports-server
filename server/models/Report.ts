@@ -3,7 +3,6 @@ import sequelize from "sequelize";
 import { sequelizeConnection } from "../services/db";
 import { Area } from "./Area";
 import { Note } from "./Note";
-import { AreaProblem } from "./AreaProblem";
 
 export const Report = sequelizeConnection.define<IReportInstance>(
     'reports',

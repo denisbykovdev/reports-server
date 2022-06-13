@@ -28,24 +28,25 @@ export default async function problemsController(
 
         console.log(`--- problemsController:`, problems);
 
-        if(problems) {
-            const fullProblems = problems.map(
-                problem => 
-                ({
-                    name: problem.name,
-                    id: problem.id,
-                    profession_name: problem.profession_name,
-                    details_of_eclipse: problem.details_of_eclipse,
-                    cost: problem.cost,
-                    standarts: problem.standarts,
-                    solution: problem.solution,
-                    isSavedToReport: false,
-                    image: [TestImage as string]
-                })
-            )
-            res.status(200).send(fullProblems);
-        };
+        // if(problems) {
+        //     const fullProblems = problems.map(
+        //         problem => 
+        //         ({
+        //             name: problem.name,
+        //             id: problem.id,
+        //             profession_name: problem.profession_name,
+        //             details_of_eclipse: problem.details_of_eclipse,
+        //             cost: problem.cost,
+        //             standarts: problem.standarts,
+        //             solution: problem.solution,
+        //             isSavedToReport: false,
+        //             image: [TestImage as string]
+        //         })
+        //     )
+        //     res.status(200).send(fullProblems);
+        // };
 
+        res.status(200).send(problems);
     } catch (error) {
         console.log(
             `--- problemsController/error:`,

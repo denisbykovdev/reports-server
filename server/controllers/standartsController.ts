@@ -20,20 +20,21 @@ export default async function standartsController(
 
         console.log(`--- standartsController:`, standarts);
 
-        if (standarts) {
-            const fullStandarts = standarts.map(
-                standart =>
-                ({
-                    id: standart.id,
-                    text: standart.text,
-                    whatToDo: standart.whatToDo,
-                    fault: standart.fault,
-                    profession: standart.profession,
-                    image: TestImage as string
-                })
-            );
-            res.status(200).send(fullStandarts);
-        };
+        // if (standarts) {
+        //     const fullStandarts = standarts.map(
+        //         standart =>
+        //         ({
+        //             id: standart.id,
+        //             text: standart.text,
+        //             whatToDo: standart.whatToDo,
+        //             fault: standart.fault,
+        //             profession: standart.profession,
+        //             image: TestImage as string
+        //         })
+        //     );
+        //     res.status(200).send(fullStandarts);
+        // };
+        res.status(200).send(standarts);
 
     } catch (error) {
         console.log(
